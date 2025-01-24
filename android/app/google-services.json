@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "375632463645",
+    "project_id": "stealth-30c79",
+    "storage_bucket": "stealth-30c79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375632463645:android:98897468a11153fb1183f4",
+        "android_client_info": {
+          "package_name": "com.param.stealth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp5LM2q42qwbhFrFWnXk9lrPiO1sIZrHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
