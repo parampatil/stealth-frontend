@@ -146,4 +146,13 @@ class UserAuthProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  // sign out user
+  Future<void> signOut() async {
+    await _auth.signOut();
+    log('User signed out');
+    _fileImage = null;
+    _userModel = null;
+    notifyListeners();
+  }
 }

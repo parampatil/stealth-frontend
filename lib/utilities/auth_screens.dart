@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/models/user_model.dart';
@@ -110,15 +111,22 @@ class AuthScreens {
             title: const Text('Profile'),
             centerTitle: true,
           ),
-          avatar: UserImageAvatar(
-            radius: 60.0,
-            fileImage: userAuthProvider.fileImage,
-            imageUrl: userAuthProvider.userModel!.imageUrl,
-            onPressed: () {
-              log('show image picker dialog');
-              _handleAvatarPressed(context, userAuthProvider);
-            },
-          ),
+          avatar: kIsWeb
+              ? UserImageAvatar(
+                  radius: 60.0,
+                  fileImage: userAuthProvider.fileImage,
+                  imageUrl: userAuthProvider.userModel!.imageUrl,
+                  vieweOnly: true,
+                )
+              : UserImageAvatar(
+                  radius: 60.0,
+                  fileImage: userAuthProvider.fileImage,
+                  imageUrl: userAuthProvider.userModel!.imageUrl,
+                  onPressed: () {
+                    log('show image picker dialog');
+                    _handleAvatarPressed(context, userAuthProvider);
+                  },
+                ),
           showDeleteConfirmationDialog: true,
           actions: [
             DisplayNameChangedAction((context, oldName, newName) {
@@ -178,7 +186,8 @@ class AuthScreens {
     UserAuthProvider userAuthProvider,
   ) async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    final file = await ImagePickerHandler().showImagePickerDialog(context: context);
+    final file =
+        await ImagePickerHandler().showImagePickerDialog(context: context);
 
     if (file != null && context.mounted) {
       // set the file to file image in provider

@@ -58,6 +58,15 @@ dependencies:
   flutter_image_compress: ^2.4.0
   path_provider: ^2.1.5
 
+  # Charts
+  fl_chart: ^0.70.2
+
+  # gRPC & Protobuf
+  grpc: ^4.0.1
+  protobuf: ^3.1.0
+  build_runner: ^2.4.14
+  grpc_tools: ^2.1.0
+
   # Quality of life
   provider: ^6.1.2
   flutter_dotenv: ^5.2.1

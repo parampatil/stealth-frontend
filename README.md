@@ -29,6 +29,15 @@ A YouTube Creator Analytics Dashboard that displays earnings data, featuring soc
 - [flutter_image_compress: ^2.4.0](https://pub.dev/packages/flutter_image_compress)
 - [path_provider: ^2.1.5](https://pub.dev/packages/path_provider)
 
+### Chart Packages
+- [fl_chart: ^0.70.2](https://pub.dev/packages/fl_chart)
+
+### gRPC & Protobuf Packages
+- [grpc: ^4.0.1](https://pub.dev/packages/grpc)
+- [protobuf: ^3.1.0](https://pub.dev/packages/protobuf)
+- [build_runner: ^2.4.14](https://pub.dev/packages/build_runner)
+- [grpc_tools: ^2.1.0](https://pub.dev/packages/grpc_tools)
+
 ### Quality of life Packages
 - [provider: ^6.1.2](https://pub.dev/packages/provider)
 - [flutter_dotenv: ^5.2.1](https://pub.dev/packages/flutter_dotenv)
