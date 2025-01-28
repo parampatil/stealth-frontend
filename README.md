@@ -36,13 +36,23 @@ A YouTube Creator Analytics Dashboard that displays earnings data, featuring soc
 - [grpc: ^4.0.1](https://pub.dev/packages/grpc)
 - [protobuf: ^3.1.0](https://pub.dev/packages/protobuf)
 - [build_runner: ^2.4.14](https://pub.dev/packages/build_runner)
-- [grpc_tools: ^2.1.0](https://pub.dev/packages/grpc_tools)
 
 ### Quality of life Packages
 - [provider: ^6.1.2](https://pub.dev/packages/provider)
 - [flutter_dotenv: ^5.2.1](https://pub.dev/packages/flutter_dotenv)
 
 ## Getting Started
+### Creating Proto files
+1. health.proto
+```bash
+protoc --dart_out=grpc:lib/generated -I=lib/proto lib/proto/health.proto
+```
+2. timestamp.proto
+```bash
+protoc --dart_out=grpc:lib/generated/google/protobuf -I=lib/proto ./lib/proto/google/protobuf/timestamp.proto
+```
+
+
 
 Test User Credentials:
 - Email: test@gmail.com

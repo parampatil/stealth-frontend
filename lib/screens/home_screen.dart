@@ -6,6 +6,7 @@ import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/providers/user_auth_provider.dart';
 import 'package:stealth_frontend/utilities/global_navigation.dart';
 import 'package:stealth_frontend/widgets/user_image_avatar.dart';
+import 'package:stealth_frontend/screens/earnings_chart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,19 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userAuthProvider = Provider.of<UserAuthProvider>(context);
 
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
         actions: [
-            MenuAnchor(
+          MenuAnchor(
             builder: (context, controller, child) {
               return GestureDetector(
                 onTap: () {
                   controller.open();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding here
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
                       Text(
@@ -57,19 +57,24 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             menuChildren: [
               MenuItemButton(
-              onPressed: () => _onSelected(context, 0),
-              child: const Text('Profile'),
+                onPressed: () => _onSelected(context, 0),
+                child: const Text('Profile'),
               ),
               MenuItemButton(
-              onPressed: () => _onSelected(context, 1),
-              child: const Text('Sign Out'),
+                onPressed: () => _onSelected(context, 1),
+                child: const Text('Sign Out'),
               ),
             ],
-            ),
+          ),
         ],
       ),
-      body: const Center(
-        child: Text('Welcome to the Home Screen!'),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Constants.earningsChartRoute);
+          },
+          child: Text('View Earnings Chart'),
+        ),
       ),
     );
   }

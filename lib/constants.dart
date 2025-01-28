@@ -8,6 +8,7 @@ class Constants {
   static const String landingRoute = '/landing';
   static const String phoneVerificationRoute = '/phone-verification';
   static const String smsVerificationRoute = '/sms';
+    static const String earningsChartRoute = '/earnings-chart';
 
   // firestore collections
   static const String usersCollection = 'users';
@@ -28,4 +29,7 @@ class Constants {
   static const String createdAt = 'createdAt';
   static const String fcmToken = 'fcmToken';
   static const String isOnline = 'inOnline';
+
+  // backend url
+  static const String backendUrl = 'localhost:50051';
 }

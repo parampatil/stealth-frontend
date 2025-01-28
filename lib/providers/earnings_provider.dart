@@ -6,7 +6,7 @@ class EarningsProvider with ChangeNotifier {
   List<Earning> _earnings = [];
   List<Earning> get earnings => _earnings;
 
-  Future<void> fetchEarnings(String uid) async {
+  Future<void> fetchEarningsWithoutNotify(String uid) async {
     final grpcClient = GrpcClient();
     await grpcClient.init();
     final response = await grpcClient.getEarnings(uid);
@@ -15,6 +15,12 @@ class EarningsProvider with ChangeNotifier {
       amount: e.amount,
       date: e.date.toDateTime(),
     )).toList();
-    notifyListeners();
+  }
+
+  Future<void> generateDemoDataWithoutNotify(String uid) async {
+    final grpcClient = GrpcClient();
+    await grpcClient.init();
+    await grpcClient.generateDemoData(uid);
+    await fetchEarningsWithoutNotify(uid);
   }
 }
