@@ -6,7 +6,6 @@ import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/providers/user_auth_provider.dart';
 import 'package:stealth_frontend/utilities/global_navigation.dart';
 import 'package:stealth_frontend/widgets/user_image_avatar.dart';
-import 'package:stealth_frontend/screens/earnings_chart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

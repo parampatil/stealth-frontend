@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stealth_frontend/api/firebase_auth_config.dart';
-import 'package:stealth_frontend/api/grpc_service.dart';
 import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/providers/user_auth_provider.dart';
 import 'package:stealth_frontend/screens/earnings_chart_screen.dart';
@@ -27,7 +26,6 @@ void main() async {
   FirebaseAuthConfig.configureProvider();
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => EarningsProvider()),
     ChangeNotifierProvider(create: (_) => UserAuthProvider()),
   ], child: const MyApp()));
 }

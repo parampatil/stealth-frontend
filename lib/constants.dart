@@ -31,5 +31,5 @@ class Constants {
   static const String isOnline = 'inOnline';
 
   // backend url
-  static const String backendUrl = 'localhost:50051';
+  static const String backendUrl = 'stealth-backend-37407332866.us-central1.run.app';
 }

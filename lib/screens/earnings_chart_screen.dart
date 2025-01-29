@@ -1,9 +1,12 @@
 import 'dart:developer';
 
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart' as grpc;
+import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/generated/health.pbgrpc.dart';
 import 'package:stealth_frontend/widgets/earnings_chart.dart';
+import 'package:stealth_frontend/providers/user_auth_provider.dart';
 
 class EarningsScreen extends StatefulWidget {
   const EarningsScreen({super.key});
@@ -14,11 +17,13 @@ class EarningsScreen extends StatefulWidget {
 }
 
 class _EarningsScreenState extends State<EarningsScreen> {
+  late UserAuthProvider userAuthProvider;
+
   final client = HealthServiceClient(
     grpc.ClientChannel(
-      '192.168.0.181', // Replace with your gRPC server address
-      port: 50051, // Replace with your gRPC server port
-      options: const grpc.ChannelOptions(credentials: grpc.ChannelCredentials.insecure()),
+      Constants.backendUrl,
+      port: 443, // Default port for HTTPS
+      options: const grpc.ChannelOptions(credentials: grpc.ChannelCredentials.secure()),
     ),
   );
 
@@ -27,12 +32,13 @@ class _EarningsScreenState extends State<EarningsScreen> {
   @override
   void initState() {
     super.initState();
+    userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
     earningsFuture = _fetchEarnings();
   }
 
   Future<List<Earning>> _fetchEarnings() async {
     try {
-      final request = GetEarningsRequest()..uid = 'test_uid'; // Replace 'test_uid' with actual user ID
+      final request = GetEarningsRequest()..uid = userAuthProvider.userModel!.uid;
       final response = await client.getEarnings(request);
       return response.earnings;
     } catch (e) {
@@ -43,7 +49,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
 
   Future<void> _generateDemoData() async {
     try {
-      final request = GenerateDemoDataRequest()..uid = 'test_uid'; // Replace 'test_uid' with actual user ID
+      final request = GenerateDemoDataRequest()..uid = userAuthProvider.userModel!.uid;
       await client.generateDemoData(request);
       setState(() {
         earningsFuture = _fetchEarnings();
