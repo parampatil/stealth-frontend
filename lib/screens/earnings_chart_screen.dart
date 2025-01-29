@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart' as grpc;
-import 'package:stealth_frontend/generated/google/protobuf/timestamp.pb.dart';
-import 'package:stealth_frontend/generated/health.pb.dart';
-import 'package:stealth_frontend/generated/health.pb.dart';
 import 'package:stealth_frontend/generated/health.pbgrpc.dart';
+import 'package:stealth_frontend/widgets/earnings_chart.dart';
 
 class EarningsScreen extends StatefulWidget {
+  const EarningsScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _EarningsScreenState createState() => _EarningsScreenState();
 }
 
@@ -33,7 +36,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
       final response = await client.getEarnings(request);
       return response.earnings;
     } catch (e) {
-      print('Error fetching earnings: $e');
+      log('Error fetching earnings: $e');
       return [];
     }
   }
@@ -46,7 +49,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
         earningsFuture = _fetchEarnings();
       });
     } catch (e) {
-      print('Error generating demo data: $e');
+      log('Error generating demo data: $e');
     }
   }
 
@@ -56,6 +59,27 @@ class _EarningsScreenState extends State<EarningsScreen> {
       appBar: AppBar(title: Text('Earnings')),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              height: 300, // Adjust height as needed
+              child: FutureBuilder<List<Earning>>(
+                future: earningsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No earnings found.'));
+                  }
+
+                  final earnings = snapshot.data!;
+                  return EarningsChart(earnings: earnings);  // Pass earnings directly
+                },
+              ),
+            ),
+          ),
           Expanded(
             child: FutureBuilder<List<Earning>>(
               future: earningsFuture,
@@ -91,13 +115,7 @@ class _EarningsScreenState extends State<EarningsScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
+     ),
+);
 }
-
-extension on Timestamp {
-  DateTime toDateTime() {
-    return DateTime.fromMillisecondsSinceEpoch((seconds * 1000) as int);
-  }
 }
