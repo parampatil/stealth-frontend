@@ -8,8 +8,5 @@ enum AuthStatus {
 enum SignInMethod {
   email,
   google,
-  apple,
-  facebook,
-  twitter,
   phone,
 }

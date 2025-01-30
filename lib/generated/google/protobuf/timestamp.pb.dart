@@ -167,6 +167,8 @@ class Timestamp extends $pb.GeneratedMessage with $mixin.TimestampMixin {
   /// inclusive.
   @$pb.TagNumber(2)
   $core.int get nanos => $_getIZ(1);
+
+  get year => null;
   @$pb.TagNumber(2)
   set nanos($core.int v) { $_setSignedInt32(1, v); }
   @$pb.TagNumber(2)

@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
       Constants.profileRoute: (context) =>
           AuthScreens.buildProfileScreen(context),
       Constants.homeRoute: (context) => const HomeScreen(),
-      Constants.earningsChartRoute: (context) => EarningsScreen(),
+      Constants.earningsChartRoute: (context) => const EarningsChartScreen(),
       Constants.verifyEmailRoute: (context) =>
           AuthScreens.buildEmailVerificationScreen(context),
       Constants.phoneVerificationRoute: (context) =>

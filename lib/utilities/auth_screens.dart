@@ -25,14 +25,14 @@ class AuthScreens {
         _handlePhoneSignIn(context),
       ],
       headerBuilder: (context, constraints, shrinkOffset) {
-        return _authHeaderLogo();
+        return _authHeaderLogo(context);
       },
       subtitleBuilder: (context, action) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: action == AuthAction.signIn
-              ? const Text('Welcome to Flutter Firebase Auth, Please Sign In')
-              : const Text('Welcome to Flutter Firebase Auth, Please Sign Up'),
+              ? const Text('Welcome to Stealth App, Please Sign In')
+              : const Text('Welcome to Stealth App, Please Sign Up'),
         );
       },
       footerBuilder: (context, action) {
@@ -55,7 +55,8 @@ class AuthScreens {
     final userAuthProvider =
         Provider.of<UserAuthProvider>(context, listen: false);
     return EmailVerificationScreen(
-      headerBuilder: (context, constraints, shrinkOffset) => _authHeaderLogo(),
+      headerBuilder: (context, constraints, shrinkOffset) =>
+          _authHeaderLogo(context),
       actions: [
         EmailVerifiedAction(() {
           userAuthProvider
@@ -229,15 +230,6 @@ class AuthScreens {
           case 'google.com':
             signInMethod = SignInMethod.google;
             break;
-          case 'apple.com':
-            signInMethod = SignInMethod.apple;
-            break;
-          case 'facebook.com':
-            signInMethod = SignInMethod.facebook;
-            break;
-          case 'twitter.com':
-            signInMethod = SignInMethod.twitter;
-            break;
           case 'phone':
             signInMethod = SignInMethod.phone;
             break;
@@ -262,9 +254,6 @@ class AuthScreens {
           break;
         case SignInMethod.google:
         case SignInMethod.phone:
-        case SignInMethod.facebook:
-        case SignInMethod.twitter:
-        case SignInMethod.apple:
           _handleUserFirestoreCheck(context, user);
           break;
       }
@@ -361,13 +350,26 @@ class AuthScreens {
   }
 
   // auth header logo
-  static Widget _authHeaderLogo() {
+  static Widget _authHeaderLogo(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: AspectRatio(
-        aspectRatio: 1.0,
-        child: Image.network(
-            'https://firebase.flutter.dev/img/flutterfire_300x.png'),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Expanded(
+              child: FittedBox(
+            child: Image.network(
+              'https://static.thenounproject.com/png/1332258-200.png', // Adjust the height dynamically
+            ),
+          )),
+          Text(
+            'Stealth App',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
