@@ -1,19 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stealth_frontend/widgets/earnings_chart.dart';
+import 'package:stealth_frontend/constants.dart';
+import 'package:stealth_frontend/generated/health.pbgrpc.dart';
+import 'package:stealth_frontend/widgets/earnings_table.dart';
 import 'package:stealth_frontend/providers/user_auth_provider.dart';
 import 'package:stealth_frontend/models/earning_model.dart';
 import 'package:stealth_frontend/utilities/earnings_utils.dart';
 import 'package:stealth_frontend/widgets/sorting_filtering_buttons.dart';
 
-class EarningsChartScreen extends StatefulWidget {
-  const EarningsChartScreen({super.key});
+class EarningsTableScreen extends StatefulWidget {
+  const EarningsTableScreen({super.key});
 
   @override
-  _EarningsChartScreenState createState() => _EarningsChartScreenState();
+  _EarningsTableScreenState createState() => _EarningsTableScreenState();
 }
 
-class _EarningsChartScreenState extends State<EarningsChartScreen> {
+class _EarningsTableScreenState extends State<EarningsTableScreen> {
   late UserAuthProvider userAuthProvider;
   late Future<List<LocalEarning>> earningsFuture;
   int? selectedYear;
@@ -39,13 +43,24 @@ class _EarningsChartScreenState extends State<EarningsChartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Earnings Chart')),
+      appBar: AppBar(
+        title: const Text('Earnings Table'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                earningsFuture = EarningsUtils.fetchEarnings(userAuthProvider);
+              });
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SortingFilteringButtons(
-              showSortDropdown: false,
               selectedYear: selectedYear,
               startDate: startDate,
               endDate: endDate,
@@ -110,7 +125,7 @@ class _EarningsChartScreenState extends State<EarningsChartScreen> {
                   if (filteredEarnings.isEmpty) {
                     return const Center(child: Text('No earnings found for the selected filter.'));
                   } else {
-                    return EarningsChart(earnings: filteredEarnings);
+                    return EarningsTable(earnings: filteredEarnings);
                   }
                 }
               },

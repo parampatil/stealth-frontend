@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stealth_frontend/constants.dart';
@@ -18,25 +17,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userAuthProvider = Provider.of<UserAuthProvider>(context);
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         actions: [
           MenuAnchor(
             builder: (context, controller, child) {
               return GestureDetector(
-                onTap: () {
-                  controller.open();
-                },
+                onTap: () => controller.open(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
                       Text(
                         userAuthProvider.userModel?.name ?? 'Guest',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Colors.black87,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -45,9 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fileImage: userAuthProvider.fileImage,
                         imageUrl: userAuthProvider.userModel?.imageUrl ?? '',
                         vieweOnly: true,
-                        onPressed: () {
-                          log('User Image Avatar pressed');
-                        },
+                        onPressed: () => log('User Image Avatar pressed'),
                       ),
                     ],
                   ),
@@ -67,28 +65,132 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Constants.earningsChartRoute);
-          },
-          child: Text('View Earnings Chart'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Logo and App Name
+            Container(
+              height: size.height * 0.3,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      'https://static.thenounproject.com/png/1332258-200.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Stealth App',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Action Buttons
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildActionCard(
+                    context,
+                    'Earnings Chart',
+                    'View your earnings in an interactive chart',
+                    Icons.show_chart,
+                    () => Navigator.pushNamed(context, Constants.earningsChartRoute),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildActionCard(
+                    context,
+                    'Earnings Table',
+                    'View detailed earnings in tabular format',
+                    Icons.table_chart,
+                    () => Navigator.pushNamed(context, Constants.earningTableRoute),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionCard(BuildContext context, String title, String subtitle, IconData icon, VoidCallback onTap) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  size: 32,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey[400],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   void _onSelected(BuildContext context, int item) {
-    final GlobalNavigation navigation = GlobalNavigation();
+    final GlobalNavigation _navigation = GlobalNavigation();
     switch (item) {
       case 0:
-        navigation.navigateToReplacement(Constants.profileRoute);
+        _navigation.navigateTo(Constants.profileRoute);
         break;
       case 1:
         final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
         userAuthProvider.signOut().then((_) {
           log('User signed out');
-          navigation.navigateToReplacement(Constants.signInRoute);
+          _navigation.navigateToReplacement(Constants.signInRoute);
         });
         break;
     }

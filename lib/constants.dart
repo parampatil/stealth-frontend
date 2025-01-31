@@ -8,7 +8,8 @@ class Constants {
   static const String landingRoute = '/landing';
   static const String phoneVerificationRoute = '/phone-verification';
   static const String smsVerificationRoute = '/sms';
-    static const String earningsChartRoute = '/earnings-chart';
+  static const String earningsChartRoute = '/earnings-chart';
+  static const String earningTableRoute = '/earnings-table';
 
   // firestore collections
   static const String usersCollection = 'users';

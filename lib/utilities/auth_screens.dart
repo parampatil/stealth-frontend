@@ -15,8 +15,10 @@ import 'package:provider/provider.dart';
 
 class AuthScreens {
   static final GlobalNavigation _navigation = GlobalNavigation();
+
   // build sign in screen
   static Widget buildSignInScreen(BuildContext context) {
+    // Using the SignInScreen widget from the firebase_ui_auth package
     return SignInScreen(
       providers: FirebaseUIAuth.providersFor(FirebaseAuth.instance.app),
       actions: [
@@ -108,7 +110,9 @@ class AuthScreens {
       builder: (context, userAuthProvider, _) {
         return ProfileScreen(
           appBar: AppBar(
-            leading: const BackButton(),
+            leading: BackButton(
+              onPressed: _navigation.pop,
+            ),
             title: const Text('Profile'),
             centerTitle: true,
           ),
@@ -182,6 +186,7 @@ class AuthScreens {
     );
   }
 
+  // handle avatar pressed
   static Future<void> _handleAvatarPressed(
     BuildContext context,
     UserAuthProvider userAuthProvider,
@@ -209,7 +214,7 @@ class AuthScreens {
     }
   }
 
-  // handle user creation
+  // handle user creation (sign up)
   static AuthStateChangeAction<UserCreated> _handleUserCreation() {
     return AuthStateChangeAction<UserCreated>((context, state) {
       final UserCredential userCredential = state.credential;

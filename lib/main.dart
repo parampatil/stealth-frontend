@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stealth_frontend/api/firebase_auth_config.dart';
 import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/providers/user_auth_provider.dart';
+import 'package:stealth_frontend/screens/earning_table_screen.dart';
 import 'package:stealth_frontend/screens/earnings_chart_screen.dart';
 import 'package:stealth_frontend/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           AuthScreens.buildProfileScreen(context),
       Constants.homeRoute: (context) => const HomeScreen(),
       Constants.earningsChartRoute: (context) => const EarningsChartScreen(),
+      Constants.earningTableRoute: (context) => const EarningsTableScreen(),
       Constants.verifyEmailRoute: (context) =>
           AuthScreens.buildEmailVerificationScreen(context),
       Constants.phoneVerificationRoute: (context) =>

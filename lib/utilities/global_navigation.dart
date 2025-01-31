@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class GlobalNavigation {
   static final GlobalNavigation _instance = GlobalNavigation._internal();
-  factory GlobalNavigation() => _instance;
+  factory GlobalNavigation() => _instance; // Ensure only one instance of GlobalNavigation is created (singleton)
   GlobalNavigation._internal();
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -65,8 +65,4 @@ class GlobalNavigation {
       Navigator.of(navigatorKey.currentContext!).pop();
     }
   }
-
-  // void dismissDialog() {
-  //   navigatorKey.currentState!.pop();
-  // }
 }

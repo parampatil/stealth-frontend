@@ -15,6 +15,6 @@ class FirebaseAuthConfig {
 
   // get the google client id from .env file
   static String get getGoogleClientId {
-    return dotenv.env['GOOGLE_WEB_CLIENT_ID'] ?? '';
+    return dotenv.env['GOOGLE_WEB_CLIENT_ID'] ?? '375632463645-3vfrv5aav4hs6v2651v7i55k7qoh11g8.apps.googleusercontent.com';
   }
 }
