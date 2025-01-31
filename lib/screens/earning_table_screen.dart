@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stealth_frontend/constants.dart';
-import 'package:stealth_frontend/generated/health.pbgrpc.dart';
 import 'package:stealth_frontend/widgets/earnings_table.dart';
 import 'package:stealth_frontend/providers/user_auth_provider.dart';
 import 'package:stealth_frontend/models/earning_model.dart';
