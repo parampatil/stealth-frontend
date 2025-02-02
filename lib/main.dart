@@ -8,11 +8,11 @@ import 'package:stealth_frontend/screens/earnings_chart_screen.dart';
 import 'package:stealth_frontend/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stealth_frontend/screens/landing_screen.dart';
+import 'package:stealth_frontend/screens/user_list_screen.dart';
 import 'package:stealth_frontend/utilities/auth_screens.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stealth_frontend/utilities/global_navigation.dart';
 import 'firebase_options.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
           AuthScreens.buildPhoneInputScreen(context),
       Constants.smsVerificationRoute: (context) =>
           AuthScreens.buildSMSVerificationScreen(context),
+          Constants.userListRoute: (context) => const UserListScreen(), // Add the new route
     };
   }
 }

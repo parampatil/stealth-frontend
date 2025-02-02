@@ -10,6 +10,7 @@ class Constants {
   static const String smsVerificationRoute = '/sms';
   static const String earningsChartRoute = '/earnings-chart';
   static const String earningTableRoute = '/earnings-table';
+  static const String userListRoute = '/user-list';
 
   // firestore collections
   static const String usersCollection = 'users';

@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            
+
             // Action Buttons
             Padding(
               padding: const EdgeInsets.all(24.0),
@@ -104,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     'Earnings Chart',
                     'View your earnings in an interactive chart',
                     Icons.show_chart,
-                    () => Navigator.pushNamed(context, Constants.earningsChartRoute),
+                    () => Navigator.pushNamed(
+                        context, Constants.earningsChartRoute),
                   ),
                   const SizedBox(height: 16),
                   _buildActionCard(
@@ -112,7 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     'Earnings Table',
                     'View detailed earnings in tabular format',
                     Icons.table_chart,
-                    () => Navigator.pushNamed(context, Constants.earningTableRoute),
+                    () => Navigator.pushNamed(
+                        context, Constants.earningTableRoute),
+                  ),
+                  const SizedBox(height: 16),
+                  _buildActionCard(context, 'Video Call',
+                      'Connect with other people', Icons.video_call, 
+                      () => Navigator.pushNamed(context, Constants.userListRoute)
                   ),
                 ],
               ),
@@ -123,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildActionCard(BuildContext context, String title, String subtitle, IconData icon, VoidCallback onTap) {
+  Widget _buildActionCard(BuildContext context, String title, String subtitle,
+      IconData icon, VoidCallback onTap) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -187,7 +195,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _navigation.navigateTo(Constants.profileRoute);
         break;
       case 1:
-        final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
+        final userAuthProvider =
+            Provider.of<UserAuthProvider>(context, listen: false);
         userAuthProvider.signOut().then((_) {
           log('User signed out');
           _navigation.navigateToReplacement(Constants.signInRoute);
