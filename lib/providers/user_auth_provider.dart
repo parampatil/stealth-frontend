@@ -7,6 +7,9 @@ import 'package:stealth_frontend/constants.dart';
 import 'package:stealth_frontend/models/user_model.dart';
 import 'package:stealth_frontend/utilities/enums.dart';
 import 'package:stealth_frontend/utilities/file_upload_handler.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UserAuthProvider extends ChangeNotifier {
   File? _fileImage;
@@ -153,6 +156,17 @@ class UserAuthProvider extends ChangeNotifier {
     log('User signed out');
     _fileImage = null;
     _userModel = null;
+    ZegoUIKitPrebuiltCallInvitationService().uninit();
     notifyListeners();
+  }
+
+  Future<void> initZegoCalling() async {
+    ZegoUIKitPrebuiltCallInvitationService().init(
+      appID: int.parse(dotenv.get('appID')),
+      appSign: dotenv.get('appSign'),
+      userID: _userModel!.uid,
+      userName: _userModel!.name,
+      plugins: [ZegoUIKitSignalingPlugin()],
+    );
   }
 }

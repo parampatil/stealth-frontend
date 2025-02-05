@@ -12,10 +12,14 @@ import 'package:stealth_frontend/screens/user_list_screen.dart';
 import 'package:stealth_frontend/utilities/auth_screens.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stealth_frontend/utilities/global_navigation.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(GlobalNavigation().navigatorKey);
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -26,14 +30,28 @@ void main() async {
   // configure providers
   FirebaseAuthConfig.configureProvider();
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => UserAuthProvider()),
-  ], child: const MyApp()));
+  ZegoUIKit().initLog().then((value) {
+    ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI(
+      [ZegoUIKitSignalingPlugin()],
+    );
+      runApp(MultiProvider(providers: [
+        ChangeNotifierProvider(create: (_) => UserAuthProvider()),
+      ], child: MyApp(navigatorKey: GlobalNavigation().navigatorKey)));
+  });
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget  {
+   final GlobalKey navigatorKey;
+   const MyApp({
+    required this.navigatorKey,
+    Key? key,
+  }) : super(key: key);
 
+  @override
+  State createState() => MyAppState();
+}
+
+class MyAppState extends State {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

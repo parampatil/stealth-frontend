@@ -362,11 +362,8 @@ class AuthScreens {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Expanded(
-              child: FittedBox(
-            child: Image.network(
-              'https://static.thenounproject.com/png/1332258-200.png', // Adjust the height dynamically
-            ),
-          )),
+            child: Image.asset('assets/images/logo.png'),
+          ),
           Text(
             'Stealth App',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(

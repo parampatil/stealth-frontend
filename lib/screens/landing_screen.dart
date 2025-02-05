@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stealth_frontend/constants.dart';
@@ -31,6 +33,11 @@ class _LandingScreenState extends State<LandingScreen> {
       AuthStatus authStatus = await userAuthProvider.checkAuthState(
         uid: auth.currentUser?.uid,
       );
+
+      if (AuthStatus.authenticated == authStatus) {
+        log('Initializing Zego Video');
+        await userAuthProvider.initZegoCalling();
+      }
 
       navigate(authStatus: authStatus);
     });
